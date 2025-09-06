@@ -1,0 +1,249 @@
+/* ================================
+   Page Layout - Matches Signup Theme
+================================ */
+.in-profile-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #2a5a6f, #000000);
+  color: #e6eef8;
+  padding: 2rem;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ================================
+   Back Button
+================================ */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  z-index: 40;
+  backdrop-filter: blur(6px);
+}
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  transform: translateY(-2px);
+}
+
+/* ================================
+   Profile Card
+================================ */
+.in-profile-card {
+  background: rgba(30, 144, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2.25rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  position: relative;
+  text-align: center;
+  color: #e6eef8;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ================================
+   Profile Image Container
+================================ */
+.in-profile-card .profile-image-container {
+  position: relative;
+  display: inline-block;
+  margin-top: -80px; /* floating overlap */
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(30, 144, 255, 0.4), rgba(13, 110, 253, 0.2));
+  box-shadow: 0 4px 18px rgba(30, 144, 255, 0.25), 0 0 12px rgba(30, 144, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.in-profile-card .profile-image-container:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(30, 144, 255, 0.35), 0 0 16px rgba(30, 144, 255, 0.25);
+}
+
+/* Profile Image */
+.in-profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.15));
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3), inset 0 0 6px rgba(255,255,255,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.in-profile-card .profile-image-container:hover .profile-image {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 0 8px rgba(255,255,255,0.08);
+}
+
+/* ================================
+   Edit Button
+================================ */
+.in-edit-btn {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  background: linear-gradient(90deg, #1e90ff, #0d6efd);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(30, 144, 255, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.in-edit-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(30, 144, 255, 0.35);
+}
+
+/* ================================
+   Title Section
+================================ */
+.in-profile-card h2 {
+  margin-top: 8px;
+  margin-bottom: 14px;
+  color: #dbeafe;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+/* ================================
+   Profile Details
+================================ */
+.in-profile-details {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.in-profile-details p {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(230, 238, 248, 0.95);
+  font-size: 15px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.01);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.in-profile-details p:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.in-profile-details p strong {
+  color: #90caf9;
+  font-weight: 600;
+  margin-right: 12px;
+  min-width: 140px;
+  text-align: left;
+}
+
+.in-profile-details p span.value {
+  color: #f8fafc;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ================================
+   Responsive Design
+================================ */
+@media (max-width: 640px) {
+  .in-profile-card {
+    padding: 2rem 1.25rem;
+    max-width: 92%;
+  }
+
+  .in-profile-image {
+    width: 96px;
+    height: 96px;
+  }
+
+  .in-profile-card .profile-image-container {
+    margin-top: -60px;
+  }
+
+  .in-profile-details p strong {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .in-profile-details p {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
+
+/* ================================
+   Editable Inputs (when editing)
+================================ */
+.in-profile-details input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #f8fafc;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.in-profile-details input:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 8px rgba(30, 144, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ================================
+   Save Button
+================================ */
+.in-save-btn {
+  margin-top: 20px;
+  background: linear-gradient(90deg, #1e90ff, #0d6efd);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(30, 144, 255, 0.25);
+}
+
+.in-save-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(90deg, #0d6efd, #1e90ff);
+  box-shadow: 0 6px 16px rgba(30, 144, 255, 0.35);
+}

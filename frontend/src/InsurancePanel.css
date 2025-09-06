@@ -1,0 +1,102 @@
+/* Container */
+.insurance-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+  background: radial-gradient(circle at top, #2a5a6f, #000000);
+  font-family: "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+/* Panel */
+.insurance-panel {
+  background: rgba(255, 255, 255, 0.07);
+  margin-top: 50px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  width: 90%;
+  max-width: 1100px;
+  backdrop-filter: blur(6px);
+}
+
+/* Title */
+.panel-title {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Table */
+.insurance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.insurance-table th,
+.insurance-table td {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.insurance-table th {
+  background: rgba(42, 90, 111, 0.85);
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.insurance-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Action buttons */
+.accept-btn,
+.reject-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 5px;
+}
+
+.accept-btn {
+  background: #4fd1c5; /* teal */
+  color: #000;
+}
+
+.accept-btn:hover {
+  background: #38b2ac;
+  color: #fff;
+}
+
+.reject-btn {
+  background: #e53e3e; /* red */
+  color: #fff;
+}
+
+.reject-btn:hover {
+  background: #c53030;
+}
+
+/* Empty state */
+.insurance-panel p {
+  text-align: center;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 30px;
+}

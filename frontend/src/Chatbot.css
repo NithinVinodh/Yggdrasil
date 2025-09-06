@@ -1,0 +1,368 @@
+.chatbot-container {
+  width: 400px;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.836);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  font-family: "Segoe UI", sans-serif;
+
+  /* Start hidden outside screen */
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.chatbot-container.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #003b73, #0077b6);
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* space for close button */
+}
+
+
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-message {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 15px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.chat-message.bot {
+  align-self: flex-start;
+  background: #e3f2fd;
+  color: #003b73;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background: #0077b6;
+  color: white;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.chat-input button {
+  margin-left: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: #0077b6;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-input button:hover {
+  background: #005f8f;
+}
+
+
+.chat-section {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto; /* centers in page */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+}
+
+/* .chat-header {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px;
+  background: linear-gradient(135deg, #003b73, #0077b6);
+  color: white;
+} */
+
+.chatbot-icon {
+  margin-right: 8px;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-right: 8px;
+}
+
+.chat-input button {
+  background: #4a90e2;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attach-container {
+  position: relative;
+  margin-right: 8px;
+}
+
+.attach-icon {
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.attach-options {
+  position: absolute;
+  bottom: 45px;
+  left: -30px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.attach-options div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.attach-options div:hover {
+  background: #f1f1f1;
+}
+
+.attach-options {
+  position: absolute;
+  bottom: 50px;      /* a bit more space above input bar */
+  right: 0;          /* stick to right so it aligns above paperclip */
+  transform: translateX(-70%);  /* shift left */
+  
+  background: #2c2f33;   /* dark background like WhatsApp */
+  color: #fff;           /* white text */
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 20;
+  min-width: 160px;
+}
+
+.attach-options div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.attach-options div:hover {
+  background: #40444b;  /* lighter hover effect */
+}
+
+.attach-options svg {
+  font-size: 16px;
+  color: #4a90e2;  /* give icons a nice accent color */
+}
+
+/* Container */
+.react-datepicker {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+}
+
+/* Header */
+.react-datepicker__header {
+  background-color: #f9fafb;
+  border-bottom: none;
+  padding: 12px;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Month/Year title */
+.react-datepicker__current-month {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Navigation arrows */
+.react-datepicker__navigation {
+  top: 16px;
+}
+.react-datepicker__navigation-icon::before {
+  border-color: #666;
+}
+
+/* Day grid */
+.react-datepicker__day {
+  width: 36px;
+  line-height: 36px;
+  border-radius: 50%;
+  margin: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect */
+.react-datepicker__day:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+/* Selected day */
+.react-datepicker__day--selected {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Today's date highlight */
+.react-datepicker__day--today {
+  border: 1px solid #007bff;
+  font-weight: 500;
+}
+
+/* Outside month days */
+.react-datepicker__day--outside-month {
+  color: #bbb;
+}
+
+.chat-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.chat-close-btn:hover {
+  color: #ffdddd;
+}
+
+
+/* Wrapper fixed to bottom-right */
+.chatbot-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+/* Floating launcher button */
+.chatbot-launch-btn {
+  background: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease;
+}
+.chatbot-launch-btn:hover {
+  background: #005f8f;
+}
+
+/* Chatbot container with animation */
+.chatbot-container {
+  width: 400px;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.836);
+  backdrop-filter: blur(12px);
+
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.chatbot-container.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Inner content */
+.chatbot-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Close button */
+.chat-close {
+  cursor: pointer;
+  font-size: 20px;
+}
+.chat-close:hover {
+  color: #ffdddd;
+}

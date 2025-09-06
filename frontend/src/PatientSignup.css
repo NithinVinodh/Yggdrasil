@@ -1,0 +1,214 @@
+/* =======================
+   PatientSignup.css
+   ======================= */
+
+/* ---------- Page Container ---------- */
+.ps-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #2a5a6f, #000000);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- Wrapper ---------- */
+.ps-wrapper {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  z-index: 1;
+  padding: 0 1.5rem;
+}
+
+/* ---------- Back Button ---------- */
+.ps-back-button {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: rgba(30, 144, 255, 0.2);
+  border: 1px solid rgba(30, 144, 255, 0.3);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.ps-back-button:hover {
+  background: rgba(30, 144, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Header ---------- */
+.ps-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.ps-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #1e90ff, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ps-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ---------- Form ---------- */
+.ps-form {
+  background: rgba(42, 90, 111, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Error Message ---------- */
+.ps-error {
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- Form Group ---------- */
+.ps-form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* ---------- Labels ---------- */
+.ps-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ---------- Icons ---------- */
+.ps-icon {
+  position: absolute;
+  left: 1rem;
+  top: 60%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---------- Inputs & Selects ---------- */
+.ps-input,
+.ps-select {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  appearance: none;
+  cursor: pointer;
+}
+
+.ps-input:focus,
+.ps-select:focus {
+  outline: none;
+  border-color: #1e90ff;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+/* ---------- Dropdown Customization ---------- */
+.ps-select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px;
+  padding-right: 2.5rem;
+}
+
+/* Dropdown Options */
+.ps-select option {
+  background: #1e293b;
+  color: #fff;
+  padding: 10px;
+}
+
+/* ---------- Submit Button ---------- */
+.ps-submit {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1e90ff, #0d6efd);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.ps-submit:hover {
+  transform: translateY(-2px);
+}
+
+.ps-submit:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* ---------- Sign-in Link ---------- */
+.ps-signin {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+}
+
+.ps-signin a {
+  color: #64b5f6;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.ps-signin a:hover {
+  text-decoration: underline;
+}
+/* ---------- Additional Gender Dropdown ---------- */
+.ps-gender-icon {
+  position: absolute;
+  left: 1rem;
+  top: 60%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 2;
+}

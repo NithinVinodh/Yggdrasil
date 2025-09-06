@@ -1,0 +1,130 @@
+.assessment-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2a5a6f, #000000);
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Back Button */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Glass Container */
+.form-wrapper {
+  max-width: 700px;
+  width: 600px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Title */
+.form-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1d9bf0;
+  margin-bottom: 20px;
+}
+
+/* Form Layout */
+.assessment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.assessment-form label {
+  font-weight: 500;
+  color: #e5e7eb;
+  font-size: 14px;
+}
+
+/* Inputs, Select, Textarea */
+.assessment-form input,
+.assessment-form textarea {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+/* Dropdown select box */
+.assessment-form select {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  outline: none;
+  transition: 0.3s;
+}
+
+/* Dropdown options */
+.assessment-form select option {
+  background: #1e293b; /* Dark background */
+  color: #fff;         /* White text for visibility */
+}
+
+.assessment-form input::placeholder,
+.assessment-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.assessment-form input:focus,
+.assessment-form select:focus,
+.assessment-form textarea:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid #1d9bf0;
+}
+
+/* Textarea */
+.assessment-form textarea {
+  resize: none;
+  height: 90px;
+}
+
+/* Button */
+.submit-btn {
+  background: #1d9bf0;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #1a8cd8;
+}

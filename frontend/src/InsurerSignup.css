@@ -1,0 +1,222 @@
+/* Container */
+.insurer-signup-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #2a5a6f, #000000);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Back Button */
+.insurer-signup-back-btn {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: rgba(30, 144, 255, 0.2);
+  border: 1px solid rgba(30, 144, 255, 0.3);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.insurer-signup-back-btn:hover {
+  background: rgba(30, 144, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.insurer-signup-back-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Container */
+.insurer-signup-form-wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 1.5rem;
+}
+
+/* Header */
+.insurer-signup-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.insurer-signup-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #7dd3fc;
+  text-align: center;
+  background: linear-gradient(90deg, #1e90ff, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.insurer-signup-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Form */
+.insurer-signup-form {
+  background: rgba(42, 90, 111, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Input Wrapper */
+.insurer-signup-input-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.insurer-signup-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.insurer-signup-icon {
+  position: absolute;
+  left: 1rem;
+  top: 2.6rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* Input & Select */
+.insurer-signup-input,
+.insurer-signup-select {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.insurer-signup-input:focus,
+.insurer-signup-select:focus {
+  outline: none;
+  border-color: #1e90ff;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+/* Select Specific Styling */
+.insurer-signup-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.insurer-signup-select option {
+  background: #1e293b;
+  color: white;
+  padding: 10px;
+}
+
+/* Error Message */
+.insurer-signup-error {
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Submit Button */
+.insurer-signup-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #64b5f6;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.insurer-signup-submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.insurer-signup-submit-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* Loading Spinner */
+.insurer-signup-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer Link */
+.insurer-signup-footer {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 0.95rem;
+  margin: 1.5rem 0 0 0;
+}
+
+.insurer-signup-footer a {
+  color: #64b5f6;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.insurer-signup-footer a:hover {
+  text-decoration: underline;
+}
