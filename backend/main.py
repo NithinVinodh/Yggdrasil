@@ -7,7 +7,7 @@ from routes import patient, insurer, careschedule, clinicalnotes, chatbot, riskp
 # -------------------- INIT APP --------------------
 app = FastAPI(title="Yggdrasil Backend", version="1.0.0")
 
-# -------------------- MIDDLEWARE --------------------
+# -------------------- MIDDLEWARE ------------------
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",

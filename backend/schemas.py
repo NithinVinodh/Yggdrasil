@@ -4,12 +4,12 @@ from typing import Optional
 from datetime import datetime
 import re
 
-# ------------------ PASSWORD REGEX ------------------
+# ------------------ PASSWORD REGEX -----------------
 PASSWORD_REGEX = re.compile(
     r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 )
 
-# ------------------ PATIENT ------------------
+# ------------------ PATIENT -----------------
 class PatientSignup(BaseModel):
     name: str
     age: int

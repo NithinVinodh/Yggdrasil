@@ -26,7 +26,7 @@ SQLALCHEMY_DATABASE_URL = (
 # Create Engine
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-# Session Local
+# Session 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base Model
