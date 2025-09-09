@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from dotenv import load_dotenv
 
-# ------------------ LOAD ENV VARIABLES ------------------
+
 load_dotenv()
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
@@ -14,13 +14,25 @@ SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 
 
-# ------------------ SEND STATUS EMAIL ------------------
+#Email status
 def send_status_email(patient_email: str, patient_name: str, status: str):
     """
-    Send an email to the patient notifying them about the insurance application status.
+    Send an email to the patient notifying them about the insurance application status,
+    with a warm message encouraging mental health care.
     """
     subject = f"Your Insurance Application has been {status.capitalize()}"
-    body = f"Hello {patient_name},\n\nYour insurance application status has been updated to: {status.upper()}.\n\nThank you."
+
+    body = (
+        f"Hello {patient_name},\n\n"
+        f"Your insurance application status has been updated to: {status.upper()}.\n\n"
+        "Thank you for trusting us with your health journey.\n\n"
+        "At our care center, we believe that mental health is just as important as physical health. "
+        "This is a step forward in ensuring you receive the support you deserve.\n\n"
+        "Let's connect and work together for better mental health care.\n"
+        "Remember, you are not alone — we are here to support you every step of the way.\n\n"
+        "Warm regards,\n"
+        "Insurer Provider 💙"
+    )
 
     msg = MIMEMultipart()
     msg["From"] = EMAIL_USER
@@ -37,13 +49,29 @@ def send_status_email(patient_email: str, patient_name: str, status: str):
         print(f"Error sending status email to {patient_email}: {e}")
 
 
-# ------------------ SEND APPOINTMENT EMAIL ------------------
+
+#Appointment Email
 def send_appointment_email(patient_email: str, patient_name: str, appt_datetime: datetime):
     """
-    Send an email to the patient notifying them about the scheduled appointment.
+    Send an email to the patient notifying them about the scheduled appointment,
+    with a supportive mental health message.
     """
-    subject = "Your Appointment has been Scheduled"
-    body = f"Hello {patient_name},\n\nYour appointment has been scheduled on {appt_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}.\n\nThank you."
+    subject = "Your Mental Health Appointment is Scheduled from your insurer team"
+
+    body = (
+        f"Hello {patient_name},\n\n"
+        f"Your appointment has been scheduled on {appt_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}.\n\n"
+        "Thank you.\n\n"
+        "---------------------------------------------\n\n"
+        "Your mental health is our priority, and we’ve scheduled this appointment to support your well-being.\n\n"
+        "We understand that you often focus on physical health, but remember that mental health is just as important. "
+        "Taking this step shows your strength and commitment to self-care.\n\n"
+        "Please arrive on time for your session.\n"
+        "Come with an open mind and share freely — we are here to listen and support you.\n\n"
+        "Your well-being matters to us. Together, we’ll work towards a healthier mind and a better you.\n\n"
+        "Warm regards,\n"
+        "Insurer Provider 💙"
+    )
 
     msg = MIMEMultipart()
     msg["From"] = EMAIL_USER
