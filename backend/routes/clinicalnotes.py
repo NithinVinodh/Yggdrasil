@@ -12,10 +12,9 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Patient
 
-# Router instance
-router = APIRouter(prefix="/clinicalnotes", tags=["Clinical Notes"])
+# Router 
+router = APIRouter(prefix="/clinicalnotes", tags=["ClinicalNotes"])
 
-# ---------- Extractors ----------
 def extract_text_from_pdf(file_path):
     text = ""
     with pdfplumber.open(file_path) as pdf:
@@ -33,47 +32,32 @@ def extract_text_from_image(file_path):
     image = Image.open(file_path)
     return pytesseract.image_to_string(image).strip()
 
-# ---------- AI Prompt ----------
 def identify_disease_and_risk(text: str) -> str:
     """
-    Run Ollama tinyllama model for NLP disease identification.
-    Provides long suggestions and detailed output.
+    Run Ollama mistral model for NLP disease identification.
+    Distinguishes between mental health and non-mental health notes.
     """
     prompt = f"""
-You are a medical text classifier specialized in mental health.
+You are a mental health medical NLP assistant.
 
-Task: Extract mental health disease, risk level, and provide a long, detailed suggestion.
+From the following clinical note, determine if it relates to mental health.
 
-Examples:
+If it does, identify the disease mentioned, determine the risk level, and provide a medical suggestion.
 
-Clinical Note: "Patient feels sad, hopeless, avoids social contact."
-Output:
-Disease Name: Depression
-Risk Level: High
-Suggestion: The patient exhibits classical signs of depression including sadness, hopelessness, and social withdrawal. Immediate consultation with a psychiatrist is recommended, along with a structured therapy plan and support from family or caregivers. Consider regular counseling sessions, mindfulness practices, and monitoring for any suicidal thoughts or tendencies.
+If it does not, return the message: "The document is not related to mental health or is invalid."
 
-Clinical Note: "Patient is anxious before exams but manages with breathing."
-Output:
-Disease Name: Anxiety
-Risk Level: Low
-Suggestion: The patient experiences situational anxiety related to exams but is able to manage it with relaxation techniques. Encourage continued use of deep breathing, mindfulness, and structured study schedules. Consider support groups or counseling for coping strategies if anxiety increases.
+Present the output in this exact structured format only if the note is related to mental health:
 
-Clinical Note: "Patient reports difficulty concentrating, hyperactivity, and impulsive behavior."
-Output:
-Disease Name: ADHD
-Risk Level: Moderate
-Suggestion: The patient shows signs of ADHD including hyperactivity, impulsivity, and concentration difficulties. Recommend behavioral therapy, organizational strategies, and potentially consultation with a specialist for medication evaluation. Encourage structured routines and positive reinforcement strategies.
-
-Now analyze the following clinical note:
+Disease Name: [Name of the disease]
+Risk Level: [Low / Moderate / High]
+Suggestion: [Provide a short actionable medical suggestion]
 
 Clinical Note:
-\"\"\"{text}\"\"\" 
-
-Output strictly in the same format. Provide detailed suggestions. Do not output 'N/A'. If unable to determine, give a generic but meaningful suggestion.
+\"\"\"{text}\"\"\"
 """
 
     result = subprocess.run(
-        ["ollama", "run", "tinyllama"],
+        ["ollama", "run", "mistral"],
         input=prompt,
         text=True,
         capture_output=True,
@@ -82,18 +66,10 @@ Output strictly in the same format. Provide detailed suggestions. Do not output 
     )
 
     if result.returncode != 0 or not result.stdout.strip():
-        return (
-            "Disease Name: General Mental Health Concern\n"
-            "Risk Level: Moderate\n"
-            "Suggestion: Patient exhibits some symptoms that may indicate stress "
-            "or mental health issues. Recommend regular counseling sessions, relaxation "
-            "exercises, and monitoring of mood and behavior. Seek professional advice "
-            "if symptoms persist or worsen."
-        )
+        return "The document is not related to mental health or is invalid."
 
     return result.stdout.strip()
 
-# ---------- ROUTE ----------
 @router.post("/analyze")
 async def analyze_document(
     patient_id: str = Form(...),
@@ -109,7 +85,6 @@ async def analyze_document(
         with open(temp_file, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # Extract text
         if ext == ".pdf":
             extracted_text = extract_text_from_pdf(temp_file)
         elif ext == ".docx":
@@ -122,22 +97,23 @@ async def analyze_document(
         if not extracted_text:
             raise HTTPException(status_code=400, detail="No text extracted from the file.")
 
-        # Run AI model
         result = identify_disease_and_risk(extracted_text)
 
-        # Parse output
+        if result.strip().startswith("The document is not related"):
+            raise HTTPException(status_code=400, detail="The document is not related to mental health or is invalid.")
+
         disease_name = next((line.split(":", 1)[1].strip() for line in result.splitlines() if line.startswith("Disease Name:")), None)
         risk_level = next((line.split(":", 1)[1].strip() for line in result.splitlines() if line.startswith("Risk Level:")), None)
         suggestion = next((line.split(":", 1)[1].strip() for line in result.splitlines() if line.startswith("Suggestion:")), None)
 
-        # Store in DB
+        if not disease_name or not suggestion or disease_name.lower() == "n/a" or suggestion.lower() == "n/a":
+            raise HTTPException(status_code=400, detail="Invalid document. Please upload a proper clinical note.")
+
         patient = db.query(Patient).filter(Patient.id == patient_id).first()
         if not patient:
             raise HTTPException(status_code=404, detail="Patient not found")
         patient.disease_name = disease_name
         patient.riskLevel = risk_level
-        # If you have a 'suggestion' column in Patient model:
-        # patient.suggestion = suggestion
         db.commit()
         db.refresh(patient)
 
@@ -152,6 +128,6 @@ async def analyze_document(
     except HTTPException as he:
         raise he
     except Exception as e:
-        print("🔥 Backend Error:", str(e))
+        print("Backend Error:", str(e))
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail="Internal Server Error")
