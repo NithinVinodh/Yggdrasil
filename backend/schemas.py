@@ -4,12 +4,12 @@ from typing import Optional
 from datetime import datetime
 import re
 
-# ------------------ PASSWORD REGEX ------------------
+#regex for validation
 PASSWORD_REGEX = re.compile(
     r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 )
 
-# ------------------ PATIENT ------------------
+#Patient schema
 class PatientSignup(BaseModel):
     name: str
     age: int
@@ -65,7 +65,7 @@ class PatientUpdateResponse(BaseModel):
     status: str
 
 
-# ------------------ INSURER ------------------
+#Insurer schema
 class InsurerSignup(BaseModel):
     companyName: str
     email: EmailStr
@@ -114,7 +114,7 @@ class InsurerResponse(BaseModel):
     country: str
 
 
-# ------------------ APPLICATION ------------------
+#Application Schema
 class ApplyRequest(BaseModel):
     patientId: str
 
@@ -127,22 +127,34 @@ class ApplicationOut(BaseModel):
 
 
 class UpdateApplicationStatus(BaseModel):
-    status: str  # "accepted" or "declined"
+    status: str  
 
 
 class PatientApplicationOut(BaseModel):
     application_id: str
     patient_id: str
+    insurer_id: str
     name: str
     age: int
     gender: str
     riskLevel: Optional[str] = None
     moodScore: Optional[float] = None
-    apptStatus: Optional[str] = None
-    applnStatus: Optional[str] = None  # <-- made optional
+    applnStatus: Optional[str] = None  
 
 
-# ------------------ APPOINTMENTS ------------------
+#Appointment
 class AppointmentRequest(BaseModel):
     application_id: str
     scheduled_datetime: datetime
+
+class PatientAppointmentOut(BaseModel):
+    patient_id: str
+    application_id:str
+    name: str
+    age: int
+    gender: str
+    riskLevel: str
+    moodScore:int
+    status:str
+    apptStatus: Optional[str] = "pending"  
+
