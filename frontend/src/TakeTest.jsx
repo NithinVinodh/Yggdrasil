@@ -57,19 +57,24 @@ const TakeTest = () => {
   };
 
   // --- SCORING ---
-  const calculateTotalScore = () => Object.values(answers).reduce((sum, value) => sum + value, 0);
+// --- SCORING ---
+const calculateTotalScore = () => Object.values(answers).reduce((sum, value) => sum + value, 0);
 
-  const calculateDisplayScore = (totalScore) => {
-    const maxScore = GAD7_QUESTIONS.length * 3; // 16*3=48
-    return Math.round((totalScore / maxScore) * 10);
-  };
+const calculateDisplayScore = (totalScore) => {
+  const maxScore = GAD7_QUESTIONS.length * 3; // 16*3=48
+  return Math.round((totalScore / maxScore) * 10); // Scale to 0-10
+};
 
-  const getScoreInterpretation = (totalScore) => {
-    if (totalScore <= 4) return { level: "Minimal", description: "Minimal anxiety symptoms", color: "#10b981" };
-    if (totalScore <= 9) return { level: "Mild", description: "Mild anxiety symptoms", color: "#f59e0b" };
-    if (totalScore <= 14) return { level: "Moderate", description: "Moderate anxiety symptoms", color: "#f97316" };
-    return { level: "Severe", description: "Severe anxiety symptoms", color: "#ef4444" };
-  };
+const getScoreInterpretation = (totalScore) => {
+  const displayScore = calculateDisplayScore(totalScore);
+
+  if (displayScore > 8) return { level: "Severe", description: "Severe anxiety symptoms", color: "#ef4444" };
+  if (displayScore > 6) return { level: "Moderate", description: "Moderate anxiety symptoms", color: "#f97316" };
+  if (displayScore > 4) return { level: "Mild", description: "Mild anxiety symptoms", color: "#f59e0b" };
+  if (displayScore > 2) return { level: "Minimal", description: "Minimal anxiety symptoms", color: "#10b981" };
+  return { level: "Normal", description: "No significant anxiety symptoms", color: "#3b82f6" };
+};
+
 
   const resetTest = () => {
     setCurrentStep('mode-selection');
@@ -83,7 +88,7 @@ const TakeTest = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/patient/moodscore", {
+      const res = await fetch("http://127.0.0.1:8000/patient/patient/moodscore", {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
