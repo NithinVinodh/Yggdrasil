@@ -5,7 +5,7 @@ import uuid
 
 from database import get_db
 from models import Patient, Application, Insurer
-from auth import get_current_user, create_access_token, verify_password
+from auth import get_current_user, create_access_token, verify_password,get_password_hash
 from schemas import (
     PatientSignup, PatientLogin, PatientToken, PatientUpdateRequest,
     PatientUpdateResponse, UpdateApplicationStatus, AppointmentRequest,
@@ -13,17 +13,18 @@ from schemas import (
 )
 from utils import send_status_email, send_appointment_email
 
-router = APIRouter(prefix="/patient", tags=["Patients"])
+#Router
+router = APIRouter(prefix="/patient", tags=["Patient"])
 
 
-# ------------------ SIGNUP ------------------
+#Signup
 @router.post("/signup", response_model=PatientToken)
 def patient_signup(user: PatientSignup, db: Session = Depends(get_db)):
     existing = db.query(Patient).filter(Patient.email == user.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Patient email already registered")
 
-    hashed_pw = auth.get_password_hash(user.password)
+    hashed_pw = get_password_hash(user.password)
     new_patient = Patient(**user.dict(exclude={"password"}), password=hashed_pw)
 
     db.add(new_patient)
@@ -42,7 +43,7 @@ def patient_signup(user: PatientSignup, db: Session = Depends(get_db)):
     }
 
 
-# ------------------ LOGIN ------------------
+#Login
 @router.post("/login", response_model=PatientToken)
 def patient_login(user: PatientLogin, db: Session = Depends(get_db)):
     patient = db.query(Patient).filter(Patient.email == user.email).first()
@@ -61,7 +62,7 @@ def patient_login(user: PatientLogin, db: Session = Depends(get_db)):
     }
 
 
-# ------------------ PROFILE ------------------
+#Profile
 @router.get("/me", response_model=PatientUpdateResponse)
 def get_current_patient(current_user: Patient = Depends(get_current_user)):
     return {
@@ -76,7 +77,7 @@ def get_current_patient(current_user: Patient = Depends(get_current_user)):
     }
 
 
-# ------------------ UPDATE PROFILE ------------------
+#Update
 @router.put("/update", response_model=PatientUpdateResponse)
 def update_patient(
     update: PatientUpdateRequest,
@@ -105,7 +106,7 @@ def update_patient(
     }
 
 
-# ------------------ UPDATE MOODSCORE ------------------
+#Moodscore
 @router.put("/moodscore")
 def update_moodscore(
     moodscore: int = Body(..., embed=True),
@@ -127,7 +128,7 @@ def update_moodscore(
     }
 
 
-# ------------------ GET BY ID ------------------
+#Get by id
 @router.get("/{patient_id}")
 def get_patient_by_id(patient_id: str, db: Session = Depends(get_db)):
     patient = db.query(Patient).filter(Patient.id == patient_id).first()
@@ -142,7 +143,7 @@ def get_patient_by_id(patient_id: str, db: Session = Depends(get_db)):
     }
 
 
-# ------------------ PROVIDERS BY DISTRICT ------------------
+#Providers in district
 @router.get("/{patient_id}/providers")
 def get_providers_by_patient(patient_id: str, db: Session = Depends(get_db)):
     patient = db.query(Patient).filter(Patient.id == patient_id).first()
@@ -164,9 +165,14 @@ def get_providers_by_patient(patient_id: str, db: Session = Depends(get_db)):
     ]
 
 
-# ------------------ APPLY FOR INSURANCE ------------------
+#Apply for provider
 @router.post("/apply/{insurer_id}/{patient_id}")
 def apply_insurance(insurer_id: str, patient_id: str, db: Session = Depends(get_db)):
+    """
+    Patient applies to an insurer:
+    - Creates a pending row in Application DB
+    - Updates Patient DB applnStatus = "pending"
+    """
     patient = db.query(Patient).filter(Patient.id == patient_id).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
@@ -182,7 +188,7 @@ def apply_insurance(insurer_id: str, patient_id: str, db: Session = Depends(get_
     if existing_app:
         raise HTTPException(
             status_code=400,
-            detail="You already have a pending application with an insurance provider"
+            detail="You already have a pending application with an insurer"
         )
 
     new_app = Application(
@@ -191,17 +197,25 @@ def apply_insurance(insurer_id: str, patient_id: str, db: Session = Depends(get_
         insurer_id=insurer_id,
         status="pending"
     )
-
     db.add(new_app)
+
+    patient.applnStatus = "pending"
+    patient.apptStatus = "pending"  
+    db.add(patient)
+
     db.commit()
     db.refresh(new_app)
+    db.refresh(patient)
 
     return {
         "message": "Application submitted successfully",
         "applicationId": new_app.id,
-        "patient_id": new_app.patient_id,
-        "insurer_id": new_app.insurer_id,
-        "status": new_app.status,
-        "patient_name": f"{patient.name}",
-        "insurer_name": insurer.companyName
+        "patient_id": patient.id,
+        "insurer_id": insurer.id,
+        "applnStatus": patient.applnStatus,
+        "patient_name": patient.name,
+        "insurer_name": insurer.companyName,
+        "application_status": new_app.status
     }
+
+
