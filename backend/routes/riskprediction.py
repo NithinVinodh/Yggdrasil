@@ -28,7 +28,7 @@ class InputData(BaseModel):
 
 def safe_transform(encoder, value: str):
     if value not in encoder.classes_:
-        encoder.classes_ = np.append(encoder.classes_, value)  # Add unseen label
+        encoder.classes_ = np.append(encoder.classes_, value) 
     return encoder.transform([value])[0]
 
 
