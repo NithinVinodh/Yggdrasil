@@ -4,6 +4,8 @@ from database import Base
 import uuid
 from datetime import datetime
 
+
+#Patient model
 class Patient(Base):
     __tablename__ = "PATIENTS"
 
@@ -19,15 +21,15 @@ class Patient(Base):
     country = Column(String(100), nullable=False)
     status = Column(String(50), default="undiagnosed")
     moodScore = Column(Integer, nullable=True)
-    riskLevel = Column(Integer, nullable=True)
-    apptStatus = Column(String, default="pending")
-    applnStatus = Column(String(50), nullable=True)
+    riskLevel = Column(String, nullable=True)
+    applnStatus = Column(String, default="pending")
+    apptStatus = Column(String(50), default="pending")
     appointment_datetime = Column(DateTime, nullable=True)
     disease_name = Column(String(100), nullable=False)
-
     applications = relationship("Application", back_populates="patient")
 
 
+#Insurer table
 class Insurer(Base):
     __tablename__ = "INSURERS"
 
@@ -39,10 +41,10 @@ class Insurer(Base):
     address = Column(String(255), nullable=False)
     district = Column(String(100), nullable=False)
     country = Column(String(100), nullable=False)
-
     applications = relationship("Application", back_populates="insurer")
 
 
+#Application table
 class Application(Base):
     __tablename__ = "APPLICATIONS"
 
@@ -50,6 +52,5 @@ class Application(Base):
     patient_id = Column(String(36), ForeignKey("PATIENTS.id"), nullable=False)
     insurer_id = Column(String(36), ForeignKey("INSURERS.id"), nullable=False)
     status = Column(String(50), default="pending")
-
     patient = relationship("Patient", back_populates="applications")
     insurer = relationship("Insurer", back_populates="applications")
